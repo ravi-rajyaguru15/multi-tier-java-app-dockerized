@@ -20,7 +20,6 @@ services:
     networks:
       - backend
       
-
   rabbitmq:
     image: rabbitmq:4.0-management
     container_name: rabbitmq
