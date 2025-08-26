@@ -1,0 +1,2 @@
+-- SQL init script placeholder
+-- You can pre-load schema or data here
