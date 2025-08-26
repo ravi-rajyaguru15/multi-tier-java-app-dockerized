@@ -1,28 +1,12 @@
-
-
 services:
-  web-app:
-    build:
-      context: ./app
-    container_name: web-app
-    ports:
-      - "8080:8080"
-    depends_on:
-      - mysql-db
-      - memcached
-      - rabbitmq
-    networks:
-      - backend
-
   mysql-db:
-    image: mysql:8.0.33
+    build:
+      context: ./mysql
     container_name: mysql-db
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATBASE: ${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=vprodbpass
     volumes:
       - db-data:/var/lib/mysql
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
     networks:
@@ -41,7 +25,22 @@ services:
     container_name: rabbitmq
     ports:
       - "5672:5672"
-      - "15672:15672" # Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - backend
+  
+  web-app:
+    build:
+      context: ./app
+    container_name: web-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+      - memcached
+      - rabbitmq
     networks:
       - backend
 
