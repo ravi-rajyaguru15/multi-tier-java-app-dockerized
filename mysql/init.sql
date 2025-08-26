@@ -18,6 +18,8 @@
 --
 -- Table structure for table `role`
 --
+CREATE DATABASE IF NOT EXISTS accounts;
+USE accounts;
 
 DROP TABLE IF EXISTS `role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
